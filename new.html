@@ -26,6 +26,7 @@
   --sans:'Source Sans 3', system-ui, sans-serif;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
@@ -132,6 +133,25 @@ section[id]{scroll-margin-top:80px}
 .gallery-grid img{width:100%;height:100%;object-fit:cover;border-radius:16px}
 .gallery-grid .feature{grid-column:span 2;grid-row:span 2}
 .gallery-grid figcaption{position:absolute;left:14px;bottom:14px;padding:6px 12px;border-radius:8px;background:var(--paper);font-size:14px;font-weight:600}
+
+/* Field News */
+.news{padding-top:24px;padding-bottom:88px}
+.news-list{display:flex;flex-direction:column;gap:28px;max-width:880px}
+.post{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.post-img{aspect-ratio:16/9;background:var(--sand)}
+.post-img img{width:100%;height:100%;object-fit:cover}
+.post-body{padding:32px;display:flex;flex-direction:column;gap:14px}
+.post-date{color:var(--amber);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.post h3{font-size:28px;line-height:1.2}
+.prose{color:var(--text)}
+.prose > * + *{margin-top:14px}
+.prose p,.prose ul,.prose ol{margin:0}
+.prose ul,.prose ol{padding-left:24px}
+.prose h1,.prose h2,.prose h3,.prose h4{font-size:22px;margin-top:22px}
+.prose img{border-radius:12px;height:auto}
+.prose blockquote{margin:0;padding:4px 0 4px 18px;border-left:3px solid var(--gold);font-style:italic}
+.post-share{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:700;font-size:16px;text-decoration:none}
+.news-more{margin-top:28px}
 
 /* Churches */
 .churches{background:var(--navy);color:#fff}
@@ -250,6 +270,9 @@ section[id]{scroll-margin-top:80px}
   .big-card{padding:22px}
   .big-card .amt{font-size:30px}
   .gallery{padding-bottom:44px}
+  .news{padding-bottom:44px}
+  .post-body{padding:22px}
+  .post h3{font-size:23px}
   .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:130px;gap:10px}
   .gallery-grid .feature{grid-row:span 1;height:190px}
   .gallery-grid > :nth-child(n+4){display:none}
@@ -295,6 +318,7 @@ section[id]{scroll-margin-top:80px}
     <div class="nav-links">
       <a class="plain" href="#need">The need</a>
       <a class="plain" href="#sponsor">Sponsor a need</a>
+      <a class="plain" href="#news" id="nav-news" hidden>News</a>
       <a class="plain" href="#churches">For churches</a>
       <a class="plain" href="#team">Who we are</a>
       <a class="btn btn-outline" href="#share">
@@ -472,6 +496,16 @@ section[id]{scroll-margin-top:80px}
     <img src="img/3.jpeg" alt="A church gathering" loading="lazy">
     <img src="img/5.jpeg" alt="Teaching English and life skills to youth" loading="lazy">
   </div>
+</section>
+
+<!-- Field News: loaded from data/news.json (edited at /admin). Hidden until there is a post. -->
+<section id="news" class="wrap news" aria-labelledby="news-title" hidden>
+  <div class="section-head">
+    <p class="eyebrow">Field news</p>
+    <h2 id="news-title" class="h2">Updates and prayer points from the mission field.</h2>
+  </div>
+  <div class="news-list" id="news-list"></div>
+  <button type="button" id="news-more" class="btn btn-outline news-more" hidden>Show older news</button>
 </section>
 
 <!-- For churches -->
@@ -657,6 +691,8 @@ section[id]{scroll-margin-top:80px}
   <a class="btn btn-amber" href="#ways">Stand with us</a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 <script>
   // Testimonies: previous / next buttons and dots over a scroll-snap track.
   (function () {
@@ -702,6 +738,58 @@ section[id]{scroll-margin-top:80px}
     window.addEventListener("resize", function () { buildDots(); goTo(Math.min(target, stops() - 1)); });
     buildDots();
     paint(0);
+  })();
+
+  // Field News: posts come from data/news.json (body is Markdown).
+  (function () {
+    function esc(v) {
+      return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function fmtDate(d) {
+      var t = new Date(String(d).slice(0, 10) + "T00:00:00");
+      return isNaN(t) ? "" : t.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+    }
+    function render(md) {
+      if (!md) return "";
+      if (window.marked && window.DOMPurify) return DOMPurify.sanitize(marked.parse(String(md)));
+      return "<p>" + esc(md).replace(/\n{2,}/g, "</p><p>").replace(/\n/g, "<br>") + "</p>";
+    }
+    function card(p) {
+      var date = p.date ? fmtDate(p.date) : "";
+      var shareText = (p.title ? p.title + " — " : "") + "an update from Oasis Scripture Mission: https://oscripture.com/#news";
+      return '<article class="post">' +
+        (p.image ? '<div class="post-img"><img src="' + esc(p.image) + '" alt="' + esc(p.title || "") + '" loading="lazy" decoding="async"></div>' : "") +
+        '<div class="post-body">' +
+        (date ? '<p class="post-date">' + esc(date) + "</p>" : "") +
+        (p.title ? "<h3>" + esc(p.title) + "</h3>" : "") +
+        '<div class="prose">' + render(p.body) + "</div>" +
+        '<a class="post-share" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(shareText) + '">' +
+        '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-share"/></svg>' +
+        "Share this update</a>" +
+        "</div></article>";
+    }
+    fetch("/data/news.json", { cache: "no-cache" })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var posts = (data.posts || []).filter(function (p) { return p && (p.title || p.body); });
+        if (!posts.length) return;
+        posts.sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
+        var PAGE = 3, shown = 0;
+        var list = document.getElementById("news-list");
+        var more = document.getElementById("news-more");
+        function showMore() {
+          list.insertAdjacentHTML("beforeend", posts.slice(shown, shown + PAGE).map(card).join(""));
+          shown += PAGE;
+          more.hidden = shown >= posts.length;
+        }
+        more.addEventListener("click", showMore);
+        showMore();
+        document.getElementById("news").hidden = false;
+        document.getElementById("nav-news").hidden = false;
+      })
+      .catch(function () { /* no news yet: keep the section hidden */ });
   })();
 
   // Share: build the WhatsApp / email links from the visible message, and copy it.
