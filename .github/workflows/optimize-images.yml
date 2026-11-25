@@ -1,0 +1,48 @@
+# Safety net: whenever photos are added to img/ (from /admin, github.com, or anywhere),
+# shrink any that are too large and commit the smaller versions back. Free for public repos.
+name: Optimize images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "img/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: optimize-images
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install sharp (outside the repo)
+        run: npm install --prefix "$RUNNER_TEMP/tools" sharp@0.34
+
+      - name: Shrink oversized photos
+        env:
+          NODE_PATH: ${{ runner.temp }}/tools/node_modules
+        run: node .github/scripts/optimize-images.cjs img
+
+      - name: Commit smaller photos
+        run: |
+          if git diff --quiet -- img; then
+            echo "All photos are already a good size."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add img
+          git commit -m "Shrink oversized photos"
+          git pull --rebase origin main
+          git push

@@ -1,0 +1,71 @@
+# Sveltia CMS configuration for oscripture.com
+# Admins open https://oscripture.com/admin, edit, and click Save.
+# Each save is a commit to GitHub; Vercel then redeploys the site (about a minute).
+
+backend:
+  name: github
+  repo: samueldotj/oscripture.com
+  branch: main
+  # "Sign In with GitHub" uses the small OAuth helper in /api (free Vercel function).
+  # "Sign In with Token" also works without it.
+  base_url: https://oscripture.com
+  auth_endpoint: api/auth
+
+site_url: https://oscripture.com
+display_url: https://oscripture.com
+
+# Uploaded photos are stored in img/ and referenced as /img/<file>
+media_folder: img
+public_folder: /img
+
+media_libraries:
+  all:
+    # Photos are shrunk in the admin's browser *before* upload:
+    # max 1600 px on the longest side, converted to WebP, quality 80, location data removed.
+    transformations:
+      raster_image:
+        format: webp
+        quality: 80
+        width: 1600
+        height: 1600
+
+collections:
+  - name: site
+    label: Website
+    editor:
+      preview: false
+    files:
+      - name: gallery
+        label: Photo Gallery ("Glimpses of Impact")
+        file: data/gallery.json
+        format: json
+        fields:
+          - name: photos
+            label: Photos
+            label_singular: Photo
+            widget: list
+            hint: Drag to reorder. The first photo is shown first. Any photo size is fine; it is resized and cropped to fit automatically.
+            summary: "{{fields.title}}"
+            fields:
+              - { name: image, label: Photo, widget: image }
+              - { name: title, label: Title, widget: string, required: false }
+              - { name: caption, label: Caption, widget: string, required: false }
+              - { name: alt, label: Description (for blind visitors), widget: string, required: false, hint: "Briefly describe what is in the photo." }
+
+      - name: news
+        label: Field News
+        file: data/news.json
+        format: json
+        fields:
+          - name: posts
+            label: News Posts
+            label_singular: News Post
+            widget: list
+            hint: Newest posts are shown first (sorted by date). The website shows 3 at a time.
+            summary: "{{fields.date}} — {{fields.title}}"
+            add_to_top: true
+            fields:
+              - { name: date, label: Date, widget: datetime, time_format: false, date_format: "DD MMM YYYY", format: "YYYY-MM-DD" }
+              - { name: title, label: Title, widget: string }
+              - { name: image, label: Photo (optional), widget: image, required: false }
+              - { name: body, label: Story, widget: markdown }

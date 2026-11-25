@@ -1,0 +1,64 @@
+{
+  "photos": [
+    {
+      "image": "/img/1.jpeg",
+      "title": "Community Outreach",
+      "caption": "Building relationships in rural villages.",
+      "alt": "Community gathering in village"
+    },
+    {
+      "image": "/img/2.jpeg",
+      "title": "Depending on God",
+      "caption": "Prayer for all needs",
+      "alt": ""
+    },
+    {
+      "image": "/img/3.jpeg",
+      "title": "Planting Church",
+      "caption": "Creating communities to depend on word of God.",
+      "alt": "Church"
+    },
+    {
+      "image": "/img/4.jpeg",
+      "title": "Compassionate Care",
+      "caption": "Providing shelter and support to the needy.",
+      "alt": "Helping hands"
+    },
+    {
+      "image": "/img/5.jpeg",
+      "title": "Education for All",
+      "caption": "Teaching English and life skills to the youth.",
+      "alt": "Mountain village landscape"
+    },
+    {
+      "image": "/img/6.jpeg",
+      "title": "The Harvest Field",
+      "caption": "Reaching the unreached in the mountains.",
+      "alt": "Children studying"
+    },
+    {
+      "image": "/img/7.jpeg",
+      "title": "New Testament Verification",
+      "caption": "Pawri Bareli New Testament proof reading",
+      "alt": "New Testament"
+    },
+    {
+      "image": "/img/8.jpeg",
+      "title": "New Testament Verification",
+      "caption": "Reveiw and refinement meeting of Pawri Bareli.",
+      "alt": "New Testament Verification"
+    },
+    {
+      "image": "/img/9.jpeg",
+      "title": "Existing Conditions",
+      "caption": "The wall of their houses",
+      "alt": "Mountain village landscape"
+    },
+    {
+      "image": "/img/10.jpeg",
+      "title": "The Harvest Field",
+      "caption": "Reaching the unreached in the mountains.",
+      "alt": "Mountain village landscape"
+    }
+  ]
+}

@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oasis Scripture Mission (OSM)</title>
     <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- Markdown rendering for Field News -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Load Swiper CSS -->
@@ -376,88 +379,8 @@
 
             <!-- Swiper Container -->
             <div class="swiper mySwiper w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg border border-stone-200">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/1.jpeg" alt="Community gathering in village" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Community Outreach</p>
-                            <p class="text-stone-300 text-sm">Building relationships in rural villages.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/2.jpeg" alt="" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Depending on God</p>
-                            <p class="text-stone-300 text-sm">Prayer for all needs</p>
-                        </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/3.jpeg" alt="Church" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Planting Church</p>
-                            <p class="text-stone-300 text-sm">Creating communities to depend on word of God.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 4 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/4.jpeg" alt="Helping hands" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Compassionate Care</p>
-                            <p class="text-stone-300 text-sm">Providing shelter and support to the needy.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 5 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/5.jpeg" alt="Mountain village landscape" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Education for All</p>
-                            <p class="text-stone-300 text-sm">Teaching English and life skills to the youth.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 6 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/6.jpeg" alt="Children studying" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">The Harvest Field</p>
-                            <p class="text-stone-300 text-sm">Reaching the unreached in the mountains.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 7 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/7.jpeg" alt="New Testament" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">New Testament Verification</p>
-                            <p class="text-stone-300 text-sm">Pawri Bareli New Testament proof reading</p>
-                        </div>
-                    </div>
-                    <!-- Slide 8 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/8.jpeg" alt="New Testament Verification" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">New Testament Verification</p>
-                            <p class="text-stone-300 text-sm">Reveiw and refinement meeting of Pawri Bareli.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 9 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/9.jpeg" alt="Mountain village landscape" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">Existing Conditions</p>
-                            <p class="text-stone-300 text-sm">The wall of their houses</p>
-                        </div>
-                    </div>
-                    <!-- Slide 10 -->
-                    <div class="swiper-slide relative">
-                        <img src="img/10.jpeg" alt="Mountain village landscape" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">
-                            <p class="text-white font-heading text-xl font-bold">The Harvest Field</p>
-                            <p class="text-stone-300 text-sm">Reaching the unreached in the mountains.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Slides are loaded from data/gallery.json (edit them at /admin) -->
+                <div class="swiper-wrapper" id="gallery-slides"></div>
                 <!-- Navigation Buttons -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -465,6 +388,21 @@
                 <div class="swiper-pagination"></div>
             </div>
 
+        </section>
+
+        <!-- Field News (loaded from data/news.json, edited at /admin). Hidden until there is a post. -->
+        <section id="news" class="scroll-mt-24 hidden">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-stone-900 font-heading">Field News</h2>
+                <div class="w-16 h-1 bg-accent mx-auto mt-4 rounded-full opacity-50"></div>
+                <p class="mt-4 text-stone-600">Updates and prayer points from the mission field.</p>
+            </div>
+            <div id="news-list" class="space-y-8 max-w-4xl mx-auto"></div>
+            <div class="text-center mt-8">
+                <button id="news-more" type="button" class="hidden px-6 py-2.5 rounded-full border border-primary/30 text-primary font-semibold hover:bg-primary/5 transition">
+                    Show older news
+                </button>
+            </div>
         </section>
 
 <!-- 8. Testimonials (New Section) -->
@@ -841,15 +779,47 @@
             },
         });
 
-        // 2. Photo Carousel (Glimpses of Impact)
-        var photoSwiper = new Swiper(".mySwiper", {
+        // Small helper: escape text before putting it into HTML
+        function esc(s) {
+            return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+                return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+            });
+        }
+
+        // 2. Photo Carousel (Glimpses of Impact) - slides come from data/gallery.json
+        //    Every photo is cropped to fill the same frame (object-cover), so any
+        //    shape of photo fits the design. Photos after the first load lazily.
+        fetch("/data/gallery.json", { cache: "no-cache" })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                var photos = (data.photos || []).filter(function (p) { return p && p.image; });
+                if (!photos.length) { document.getElementById("gallery").classList.add("hidden"); return; }
+                document.getElementById("gallery-slides").innerHTML = photos.map(function (p, i) {
+                    var text = "";
+                    if (p.title || p.caption) {
+                        text = '<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-20">' +
+                            (p.title ? '<p class="text-white font-heading text-xl font-bold">' + esc(p.title) + '</p>' : "") +
+                            (p.caption ? '<p class="text-stone-300 text-sm">' + esc(p.caption) + '</p>' : "") +
+                            '</div>';
+                    }
+                    return '<div class="swiper-slide relative bg-stone-200">' +
+                        '<img src="' + esc(p.image) + '" alt="' + esc(p.alt || p.title || "") + '"' +
+                        (i === 0 ? "" : ' loading="lazy" decoding="async"') +
+                        ' class="w-full h-full object-cover object-center">' + text + '</div>';
+                }).join("");
+                initPhotoSwiper(photos.length > 1);
+            })
+            .catch(function () { document.getElementById("gallery").classList.add("hidden"); });
+
+        function initPhotoSwiper(multiple) {
+        return new Swiper(".mySwiper", {
             spaceBetween: 30,
             centeredSlides: true,
-            loop: true,
-            autoplay: {
+            loop: multiple,
+            autoplay: multiple ? {
                 delay: 2500,
                 disableOnInteraction: false,
-            },
+            } : false,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
@@ -859,6 +829,51 @@
                 prevEl: ".swiper-button-prev",
             },
         });
+        }
+
+        // 4. Field News - posts come from data/news.json (body is Markdown)
+        fetch("/data/news.json", { cache: "no-cache" })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                var posts = (data.posts || []).filter(function (p) { return p && (p.title || p.body); });
+                if (!posts.length) return;
+                posts.sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
+
+                var PAGE = 3, shown = 0;
+                var list = document.getElementById("news-list");
+                var more = document.getElementById("news-more");
+
+                function fmtDate(d) {
+                    var t = new Date(String(d).slice(0, 10) + "T00:00:00");
+                    return isNaN(t) ? "" : t.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+                }
+
+                function card(p) {
+                    var body = p.body ? DOMPurify.sanitize(marked.parse(String(p.body))) : "";
+                    var img = p.image
+                        ? '<div class="aspect-[16/9] bg-stone-200"><img src="' + esc(p.image) + '" alt="' + esc(p.title || "") +
+                          '" loading="lazy" decoding="async" class="w-full h-full object-cover object-center"></div>'
+                        : "";
+                    var date = p.date ? fmtDate(p.date) : "";
+                    return '<article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">' + img +
+                        '<div class="p-6 md:p-8">' +
+                        (date ? '<p class="text-sm font-semibold text-accent uppercase tracking-wide mb-2">' + esc(date) + '</p>' : "") +
+                        (p.title ? '<h3 class="text-2xl font-bold text-stone-900 font-heading mb-4">' + esc(p.title) + '</h3>' : "") +
+                        '<div class="prose prose-stone max-w-none prose-a:text-primary prose-img:rounded-lg">' + body + '</div>' +
+                        '</div></article>';
+                }
+
+                function showMore() {
+                    list.insertAdjacentHTML("beforeend", posts.slice(shown, shown + PAGE).map(card).join(""));
+                    shown += PAGE;
+                    more.classList.toggle("hidden", shown >= posts.length);
+                }
+
+                more.addEventListener("click", showMore);
+                showMore();
+                document.getElementById("news").classList.remove("hidden");
+            })
+            .catch(function () { /* no news file yet: keep the section hidden */ });
 
         // 3. Testimonial Carousel
         var testimonialSwiper = new Swiper(".testimonialSwiper", {
